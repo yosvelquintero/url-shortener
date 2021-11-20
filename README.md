@@ -1,29 +1,39 @@
-# README #
+# README
 
-This README would normally document whatever steps are necessary to get your application up and running.
+## url-shortener
 
-### What is this repository for? ###
+URL-shortener service to shorten URLs
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+Built on top of [NestJS](https://nestjs.com/), a progressive [Node.js](https://nodejs.org) framework for building efficient and scalable server-side applications.
 
-### How do I get set up? ###
+## Installation
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+```bash
+$ npm install
+```
 
-### Contribution guidelines ###
+## Running the app
 
-* Writing tests
-* Code review
-* Other guidelines
+```bash
+# development
+$ npm run start
 
-### Who do I talk to? ###
+# watch mode
+$ npm run start:dev
 
-* Repo owner or admin
-* Other community or team contact
+# production mode
+$ npm run start:prod
+```
+
+## Test
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
