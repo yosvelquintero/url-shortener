@@ -1,12 +1,17 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { TEnvAppApi } from '@url-shortener/types/index';
 
-export const swaggerConfig = (path: string, app: INestApplication): void => {
+export const swaggerConfig = (app: INestApplication, api: TEnvAppApi): void => {
   const config = new DocumentBuilder()
-    .setTitle('URL Shortener: API')
-    .setDescription('Swagger documentation')
-    .setVersion('1.0')
+    .setTitle(api.name)
+    .setDescription(api.swagger.description)
+    .setVersion(api.version)
     .build();
 
-  SwaggerModule.setup(path, app, SwaggerModule.createDocument(app, config));
+  SwaggerModule.setup(
+    `${api.prefix}${api.swagger.prefix}`,
+    app,
+    SwaggerModule.createDocument(app, config),
+  );
 };
