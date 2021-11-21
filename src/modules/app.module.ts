@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { AppController } from '@url-shortener/modules/app.controller';
-import { AppService } from '@url-shortener/modules/app.service';
 import { UsersModule } from '@url-shortener/modules/users/users.module';
 import { UrlsModule } from '@url-shortener/modules/urls/urls.module';
+import { AuthModule } from '@url-shortener/modules/auth/auth.module';
 import { ENV } from '@url-shortener/config/index';
 
 @Module({
@@ -19,10 +18,11 @@ import { ENV } from '@url-shortener/config/index';
         useUnifiedTopology: true,
       }),
     }),
+    AuthModule,
     UsersModule,
     UrlsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
