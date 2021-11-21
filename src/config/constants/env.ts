@@ -7,6 +7,7 @@ export const ENV: DeepReadonly<IEnv> = {
       host: 'APP_API_HOST',
       port: 'APP_API_PORT',
       prefix: 'APP_API_PREFIX',
+      swagger: 'APP_API_SWAGGER',
       isProduction: 'APP_API_IS_PRODUCTION',
     },
   },

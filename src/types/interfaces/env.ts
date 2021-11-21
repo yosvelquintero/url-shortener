@@ -4,6 +4,7 @@ export interface IEnv {
       host: string;
       port: string;
       prefix: string;
+      swagger: string;
       isProduction: string;
     };
   };
