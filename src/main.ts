@@ -1,12 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { Logger, VersioningType } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 
 import { AppModule } from '@url-shortener/modules/app.module';
-import { ENV, swaggerConfig } from '@url-shortener/config/index';
+import {
+  ENV,
+  securityConfig,
+  swaggerConfig,
+} from '@url-shortener/config/index';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger('URL Shortener: API');
   const configService = app.get(ConfigService);
   const env = {
     host: configService.get(ENV.app.api.host),
@@ -14,11 +19,7 @@ async function bootstrap() {
     prefix: configService.get(ENV.app.api.prefix),
     swagger: configService.get(ENV.app.api.swagger),
   };
-  const logger = new Logger('URL Shortener: API');
-  app.setGlobalPrefix(env.prefix);
-  app.enableVersioning({
-    type: VersioningType.URI,
-  });
+  securityConfig(env.prefix, app);
   swaggerConfig(`${env.prefix}${env.swagger}`, app);
 
   await app.listen(env.port, () => {
