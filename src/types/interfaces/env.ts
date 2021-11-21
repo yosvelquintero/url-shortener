@@ -1,12 +1,13 @@
 export interface IEnv {
-  database: {
-    app: {
-      api: {
-        host: string;
-        port: string;
-        prefix: string;
-      };
+  app: {
+    api: {
+      host: string;
+      port: string;
+      prefix: string;
+      isProduction: string;
     };
+  };
+  database: {
     mongodb: {
       mongodbHost: string;
       mongodbDb: string;
