@@ -8,11 +8,11 @@ import * as helmet from 'helmet';
 
 export const securityConfig = (prefix: string, app: INestApplication): void => {
   app.use(helmet());
-  app.setGlobalPrefix(prefix);
+  app.enableCors();
   app.enableVersioning({
     type: VersioningType.URI,
   });
-  app.enableCors();
+  app.setGlobalPrefix(prefix);
   app.useGlobalPipes(
     new ValidationPipe({
       forbidNonWhitelisted: true,
