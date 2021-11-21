@@ -3,8 +3,11 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
-/dist
 /node_modules
+/dist
+
+# Environment file
+.env
 
 # Logs
 logs
