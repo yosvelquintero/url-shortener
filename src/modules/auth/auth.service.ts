@@ -1,26 +1,55 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
+import { ENTITY } from '@app/config/index';
+import { UserDocument } from '@app/modules/users/entities/user.entity';
+import {
+  IAuthJWTPayload,
+  IAuthToken,
+  IAuthUserCredentials,
+  IAuthUserPartial,
+} from '@app/types/index';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    private readonly jwtService: JwtService,
+    @InjectModel(ENTITY.names.userEntity)
+    private readonly userModel: Model<UserDocument>,
+  ) {}
+
+  public async login({
+    email,
+    password,
+  }: IAuthUserCredentials): Promise<IAuthToken> {
+    const user: IAuthUserPartial = await this.validateUser(email, password);
+    const payload: IAuthJWTPayload = {
+      sub: user.id,
+      email,
+      role: user.role,
+    };
+
+    return {
+      id: user.id,
+      token: await this.jwtService.signAsync(payload),
+      role: user.role,
+    };
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  public async validateUser(
+    email: string,
+    password: string,
+  ): Promise<IAuthUserPartial> {
+    const user: UserDocument = await this.userModel.findOne({ email });
+    if (!user || user.password !== password) {
+      throw new UnauthorizedException('user email and/or password incorrect!');
+    }
+    return this.sanitized(user);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  private sanitized({ _id, email, role }: UserDocument): IAuthUserPartial {
+    return { id: _id, email, role };
   }
 }

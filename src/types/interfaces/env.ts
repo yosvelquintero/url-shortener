@@ -13,6 +13,12 @@ export interface IEnv {
       };
     };
   };
+  auth: {
+    jwt: {
+      expiresIn: string;
+      secret: string;
+    };
+  };
   database: {
     mongodb: {
       mongodbHost: string;
