@@ -1,11 +1,22 @@
 export interface IEnv {
   app: {
     api: {
+      name: string;
+      version: string;
       host: string;
       port: string;
-      prefix: string;
-      swagger: string;
       isProduction: string;
+      prefix: string;
+      swagger: {
+        description: string;
+        prefix: string;
+      };
+    };
+  };
+  auth: {
+    jwt: {
+      expiresIn: string;
+      secret: string;
     };
   };
   database: {

@@ -18,9 +18,12 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@url-shortener/config/*": ["./src/config/*"],
-      "@url-shortener/modules/*": ["./src/modules/*"],
-      "@url-shortener/types/*": ["./src/types/*"]
+      "@app/config/*": ["./src/config/*"],
+      "@app/decorators/*": ["./src/decorators/*"],
+      "@app/filters/*": ["./src/filters/*"],
+      "@app/modules/*": ["./src/modules/*"],
+      "@app/types/*": ["./src/types/*"],
+      "@app/utils/*": ["./src/utils/*"]
     }
   }
 }

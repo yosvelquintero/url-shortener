@@ -1,14 +1,26 @@
 import { DeepReadonly } from 'ts-essentials';
-import { IEnv } from '@url-shortener/types/index';
+
+import { IEnv } from '@app/types/index';
 
 export const ENV: DeepReadonly<IEnv> = {
   app: {
     api: {
+      name: 'APP_API_NAME',
+      version: 'APP_API_VERSION',
       host: 'APP_API_HOST',
       port: 'APP_API_PORT',
       prefix: 'APP_API_PREFIX',
-      swagger: 'APP_API_SWAGGER',
       isProduction: 'APP_API_IS_PRODUCTION',
+      swagger: {
+        description: 'APP_API_SWAGGER_DESCRIPTION',
+        prefix: 'APP_API_SWAGGER_PREFIX',
+      },
+    },
+  },
+  auth: {
+    jwt: {
+      expiresIn: 'AUTH_JWT_EXPIRES_IN',
+      secret: 'AUTH_JWT_SECRET',
     },
   },
   database: {

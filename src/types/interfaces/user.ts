@@ -1,9 +1,9 @@
 export interface IUser {
-  id?: string;
+  id: string;
   name: string;
   email: string;
-  apiKey: string;
+  password: string;
   created: Date;
   updated: Date;
-  deleted: Date;
+  deleted: Date | null;
 }
