@@ -6,39 +6,85 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
-@Controller('users')
+import { AUTH } from '@app/config/index';
+import { Roles } from '@app/modules/auth/decorators';
+import { EUserRole } from '@app/types/index';
+
+import { JwtAuthGuard, RolesGuard } from '../auth/guards';
+
+import { UsersService } from './users.service';
+import { CreateUserDto, UpdateUserDto, ParamsIdUserDto } from './dto';
+import { UserEntity } from './entities/user.entity';
+
+@Controller({
+  path: 'users',
+  version: '1',
+})
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles({
+  roles: [EUserRole.ADMIN],
+})
 @ApiTags('Users')
+@ApiBearerAuth(AUTH.guards.jwt)
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
+@ApiResponse({
+  status: 403,
+  description: 'Forbidden resource',
+})
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @ApiCreatedResponse({ type: UserEntity })
+  public async create(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<UserEntity> {
+    return await this.usersService.create(createUserDto);
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @ApiOkResponse({ type: [UserEntity] })
+  public async findAll(): Promise<UserEntity[]> {
+    return await this.usersService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @ApiOkResponse({ type: UserEntity })
+  @ApiNotFoundResponse({ description: 'Not found' })
+  public async findOne(
+    @Param() paramData: ParamsIdUserDto,
+  ): Promise<UserEntity> {
+    return this.usersService.findOne(paramData.id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @ApiOkResponse({ type: UserEntity })
+  @ApiNotFoundResponse({ description: 'Not found' })
+  update(
+    @Param() paramData: ParamsIdUserDto,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<UserEntity> {
+    return this.usersService.update(paramData.id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+  @ApiOkResponse({ type: UserEntity })
+  @ApiNotFoundResponse({ description: 'Not found' })
+  remove(@Param() paramData: ParamsIdUserDto): Promise<UserEntity> {
+    return this.usersService.remove(paramData.id);
   }
 }
