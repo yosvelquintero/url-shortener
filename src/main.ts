@@ -2,13 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
 
-import { AppModule } from '@url-shortener/modules/app.module';
-import {
-  ENV,
-  securityConfig,
-  swaggerConfig,
-} from '@url-shortener/config/index';
-import { TEnvAppApi } from '@url-shortener/types/index';
+import { ENV, settingsConfig, swaggerConfig } from '@app/config/index';
+import { AppModule } from '@app/modules/app/app.module';
+import { TEnvAppApi } from '@app/types/index';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -26,13 +22,13 @@ async function bootstrap() {
     },
   };
   const logger = new Logger(api.name);
-  securityConfig(api.prefix, app);
+  settingsConfig(api.prefix, app);
   swaggerConfig(app, api);
 
   await app.listen(api.port, () => {
     const url = `${api.host}:${api.port}${api.prefix}`;
     logger.log(`Running on: ${url}`);
-    logger.log(`Swagger running on: ${url}${api.swagger}`);
+    logger.log(`Swagger running on: ${url}${api.swagger.prefix}`);
   });
 }
 bootstrap();

@@ -1,9 +1,9 @@
 import { DeepReadonly } from 'ts-essentials';
-import { IAuth } from '@url-shortener/types/index';
 
-export const AUTH: DeepReadonly<IAuth> = {
+import { IAuthGuards } from '@app/types/index';
+
+export const AUTH: DeepReadonly<IAuthGuards> = {
   guards: {
-    anonymous: 'anonymous',
     local: 'local',
     jwt: 'jwt',
   },
