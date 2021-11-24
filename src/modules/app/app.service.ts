@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -27,7 +32,17 @@ export class AppService {
       throw new NotFoundException();
     }
 
-    // TODO: Handle request based on requirements...
+    if (url.deleted) {
+      throw new HttpException(
+        {
+          status: HttpStatus.GONE,
+          error: `url with code: ${code} has been deleted`,
+        },
+        HttpStatus.GONE,
+      );
+    }
+
+    // TODO: Handle expires...
 
     return url;
   }
