@@ -5,7 +5,7 @@ export interface IEnv {
       version: string;
       host: string;
       port: string;
-      isProduction: string;
+      isSwaggerEnabled: string;
       prefix: string;
       swagger: {
         description: string;

@@ -15,7 +15,7 @@ async function bootstrap() {
     host: configService.get<string>(ENV.app.api.host),
     port: configService.get<string>(ENV.app.api.port),
     prefix: configService.get<string>(ENV.app.api.prefix),
-    isProduction: configService.get<string>(ENV.app.api.isProduction),
+    isSwaggerEnabled: configService.get<string>(ENV.app.api.isSwaggerEnabled),
     swagger: {
       description: configService.get<string>(ENV.app.api.swagger.description),
       prefix: configService.get<string>(ENV.app.api.swagger.prefix),
@@ -23,7 +23,9 @@ async function bootstrap() {
   };
   const logger = new Logger(api.name);
   settingsConfig(api.prefix, app);
-  swaggerConfig(app, api);
+  if (api.isSwaggerEnabled) {
+    swaggerConfig(app, api);
+  }
 
   await app.listen(api.port, () => {
     const url = `${api.host}:${api.port}${api.prefix}`;
