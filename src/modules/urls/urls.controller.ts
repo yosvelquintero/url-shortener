@@ -61,15 +61,20 @@ export class UrlsController {
 
   @Get()
   @ApiOkResponse({ type: [UrlEntity] })
-  public async findAll(): Promise<UrlEntity[]> {
-    return await this.urlsService.findAll();
+  public async findAll(
+    @Request() { user: { id: userId } }: RequestAuthDto,
+  ): Promise<UrlEntity[]> {
+    return await this.urlsService.findAll(userId);
   }
 
   @Get(':id')
   @ApiOkResponse({ type: UrlEntity })
   @ApiNotFoundResponse({ description: 'Not found' })
-  public async findOne(@Param() paramData: ParamsIdUrlDto): Promise<UrlEntity> {
-    return this.urlsService.findOne(paramData.id);
+  public async findOne(
+    @Param() paramData: ParamsIdUrlDto,
+    @Request() { user: { id: userId } }: RequestAuthDto,
+  ): Promise<UrlEntity> {
+    return this.urlsService.findOne(userId, paramData.id);
   }
 
   @Patch(':id')
@@ -86,7 +91,10 @@ export class UrlsController {
   @Delete(':id')
   @ApiOkResponse({ type: UrlEntity })
   @ApiNotFoundResponse({ description: 'Not found' })
-  remove(@Param() paramData: ParamsIdUrlDto): Promise<UrlEntity> {
-    return this.urlsService.remove(paramData.id);
+  remove(
+    @Param() paramData: ParamsIdUrlDto,
+    @Request() { user: { id: userId } }: RequestAuthDto,
+  ): Promise<UrlEntity> {
+    return this.urlsService.remove(userId, paramData.id);
   }
 }
