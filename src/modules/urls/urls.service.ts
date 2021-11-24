@@ -45,23 +45,6 @@ export class UrlsService {
     return url;
   }
 
-  public async findOneByCode(
-    userId: string,
-    code: string,
-  ): Promise<UrlDocument> {
-    const url = await this.urlModel.findOne({
-      userId,
-      code,
-      deleted: { $eq: null },
-    });
-
-    if (!url) {
-      throw new NotFoundException();
-    }
-
-    return url;
-  }
-
   public async update(
     userId: string,
     id: string,
