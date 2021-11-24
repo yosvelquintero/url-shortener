@@ -36,7 +36,7 @@ export class AppService {
       throw new HttpException(
         {
           status: HttpStatus.GONE,
-          error: 'This url has been deleted',
+          error: `url with code: ${code} has been deleted`,
         },
         HttpStatus.GONE,
       );
