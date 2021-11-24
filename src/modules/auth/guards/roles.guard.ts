@@ -6,7 +6,7 @@ import { IAuthUserPartial, IRoles } from '@app/types/index';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private readonly reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
     const contextData: IRoles = this.getContextRoles(context);

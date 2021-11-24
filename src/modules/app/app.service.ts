@@ -33,17 +33,23 @@ export class AppService {
     }
 
     if (url.deleted) {
-      throw new HttpException(
-        {
-          status: HttpStatus.GONE,
-          error: `url with code: ${code} has been deleted`,
-        },
-        HttpStatus.GONE,
-      );
+      this.handleGoneException(code);
     }
 
-    // TODO: Handle expires...
+    if (url.expires && new Date(url.expires) < new Date()) {
+      this.handleGoneException(code, 'expired');
+    }
 
     return url;
+  }
+
+  private handleGoneException(code: string, str = 'deleted'): void {
+    throw new HttpException(
+      {
+        status: HttpStatus.GONE,
+        error: `url with code: ${code} has been ${str}`,
+      },
+      HttpStatus.GONE,
+    );
   }
 }
