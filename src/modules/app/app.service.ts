@@ -16,7 +16,6 @@ export class AppService {
   public async findOneByCode(code: string): Promise<UrlDocument> {
     const url = await this.urlModel.findOne({
       code,
-      deleted: { $eq: null },
     });
 
     if (!url) {

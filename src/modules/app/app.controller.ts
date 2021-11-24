@@ -1,21 +1,24 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Redirect } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { UrlsService } from '../urls/urls.service';
 import { ParamsCodeUrlDto } from '../urls/dto';
 import { UrlEntity } from '../urls/entities/url.entity';
+
+import { AppService } from './app.service';
 
 @Controller()
 @ApiTags('App')
 export class AppController {
-  constructor(private readonly urlsService: UrlsService) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get(':code')
   @ApiOkResponse({ type: UrlEntity })
   @ApiNotFoundResponse({ description: 'Not found' })
-  public async findOneByCode(
-    @Param() paramData: ParamsCodeUrlDto,
-  ): Promise<UrlEntity> {
-    return this.urlsService.findOneByCode(paramData.code);
+  @Redirect('', 302)
+  public async findOneByCode(@Param() paramData: ParamsCodeUrlDto) {
+    const { url } = await this.appService.findOneByCode(paramData.code);
+    return {
+      url,
+    };
   }
 }
