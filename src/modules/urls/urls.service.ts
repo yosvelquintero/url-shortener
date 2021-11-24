@@ -1,26 +1,112 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { nanoid } from 'nanoid';
+
+import { ENTITY } from '@app/config/index';
+
 import { CreateUrlDto } from './dto/create-url.dto';
 import { UpdateUrlDto } from './dto/update-url.dto';
+import { UrlDocument } from './entities/url.entity';
 
 @Injectable()
 export class UrlsService {
-  create(createUrlDto: CreateUrlDto) {
-    return 'This action adds a new url';
+  constructor(
+    @InjectModel(ENTITY.names.urlEntity)
+    private readonly urlModel: Model<UrlDocument>,
+  ) {}
+
+  public async create(
+    userId: string,
+    createUrlDto: CreateUrlDto,
+  ): Promise<UrlDocument> {
+    return new this.urlModel({
+      ...createUrlDto,
+      userId,
+      code: nanoid(10),
+    }).save();
   }
 
-  findAll() {
-    return `This action returns all urls`;
+  public async findAll(): Promise<UrlDocument[]> {
+    return await this.urlModel.find({ deleted: { $eq: null } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} url`;
+  public async findOne(id: string): Promise<UrlDocument> {
+    const url = await this.urlModel.findOne({
+      _id: id,
+      deleted: { $eq: null },
+    });
+
+    if (!url) {
+      throw new NotFoundException();
+    }
+
+    return url;
   }
 
-  update(id: number, updateUrlDto: UpdateUrlDto) {
-    return `This action updates a #${id} url`;
+  public async findOneByCode(code: string): Promise<UrlDocument> {
+    const url = await this.urlModel.findOne({
+      code,
+      deleted: { $eq: null },
+    });
+
+    if (!url) {
+      throw new NotFoundException();
+    }
+
+    // TODO: Handle request based on requirements...
+
+    return url;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} url`;
+  public async update(
+    id: string,
+    userId: string,
+    updateUrlDto: UpdateUrlDto,
+  ): Promise<UrlDocument> {
+    const url = await this.urlModel.findOneAndUpdate(
+      {
+        _id: id,
+        deleted: { $eq: null },
+      },
+      {
+        $set: {
+          ...updateUrlDto,
+          userId,
+          code: nanoid(10),
+          updated: new Date(),
+        },
+      },
+      {
+        new: true,
+      },
+    );
+
+    if (!url) {
+      throw new NotFoundException();
+    }
+
+    return url;
+  }
+
+  public async remove(id: string): Promise<UrlDocument> {
+    const url = await this.urlModel.findOneAndUpdate(
+      {
+        _id: id,
+        deleted: { $eq: null },
+      },
+      { $set: { deleted: new Date() } },
+      {
+        new: true,
+        runValidators: true,
+        context: 'query',
+      },
+    );
+
+    if (!url) {
+      throw new NotFoundException();
+    }
+
+    return url;
   }
 }
