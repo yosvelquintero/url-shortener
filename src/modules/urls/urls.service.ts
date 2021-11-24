@@ -54,8 +54,6 @@ export class UrlsService {
       throw new NotFoundException();
     }
 
-    // TODO: Handle request based on requirements...
-
     return url;
   }
 

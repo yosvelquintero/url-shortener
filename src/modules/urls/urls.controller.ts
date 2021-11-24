@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -20,6 +21,7 @@ import {
 import { AUTH } from '@app/config/index';
 import { EUserRole } from '@app/types/index';
 
+import { RequestAuthDto } from '../auth/dto/request-auth.dto';
 import { JwtAuthGuard, RolesGuard } from '../auth/guards';
 import { Roles } from '../auth/decorators';
 
@@ -50,10 +52,11 @@ export class UrlsController {
 
   @Post()
   @ApiCreatedResponse({ type: UrlEntity })
-  public async create(@Body() createUrlDto: CreateUrlDto): Promise<UrlEntity> {
-    // TODO: extract user from request
-    const userId = '619cba68df45478e2616728f';
-    return await this.urlsService.create(userId, createUrlDto);
+  public async create(
+    @Body() bodyData: CreateUrlDto,
+    @Request() { user: { id: userId } }: RequestAuthDto,
+  ): Promise<UrlEntity> {
+    return await this.urlsService.create(userId, bodyData);
   }
 
   @Get()
@@ -73,12 +76,11 @@ export class UrlsController {
   @ApiOkResponse({ type: UrlEntity })
   @ApiNotFoundResponse({ description: 'Not found' })
   update(
+    @Body() bodyData: UpdateUrlDto,
     @Param() paramData: ParamsIdUrlDto,
-    @Body() updateUrlDto: UpdateUrlDto,
+    @Request() { user: { id: userId } }: RequestAuthDto,
   ): Promise<UrlEntity> {
-    // TODO: extract user from request
-    const userId = '619cba5cdf45478e26167288';
-    return this.urlsService.update(paramData.id, userId, updateUrlDto);
+    return this.urlsService.update(paramData.id, userId, bodyData);
   }
 
   @Delete('urls/:id')
