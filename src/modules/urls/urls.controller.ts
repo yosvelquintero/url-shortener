@@ -85,7 +85,7 @@ export class UrlsController {
     @Param() paramData: ParamsIdUrlDto,
     @Request() { user: { id: userId } }: RequestAuthDto,
   ): Promise<UrlEntity> {
-    return this.urlsService.update(paramData.id, userId, bodyData);
+    return this.urlsService.update(userId, paramData.id, bodyData);
   }
 
   @Delete(':id')
