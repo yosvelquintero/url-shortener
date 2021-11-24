@@ -65,14 +65,14 @@ export class UrlsController {
     return await this.urlsService.findAll();
   }
 
-  @Get('urls/:id')
+  @Get(':id')
   @ApiOkResponse({ type: UrlEntity })
   @ApiNotFoundResponse({ description: 'Not found' })
   public async findOne(@Param() paramData: ParamsIdUrlDto): Promise<UrlEntity> {
     return this.urlsService.findOne(paramData.id);
   }
 
-  @Patch('urls/:id')
+  @Patch(':id')
   @ApiOkResponse({ type: UrlEntity })
   @ApiNotFoundResponse({ description: 'Not found' })
   update(
@@ -83,7 +83,7 @@ export class UrlsController {
     return this.urlsService.update(paramData.id, userId, bodyData);
   }
 
-  @Delete('urls/:id')
+  @Delete(':id')
   @ApiOkResponse({ type: UrlEntity })
   @ApiNotFoundResponse({ description: 'Not found' })
   remove(@Param() paramData: ParamsIdUrlDto): Promise<UrlEntity> {
