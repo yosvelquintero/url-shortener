@@ -6,39 +6,87 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { UrlsService } from './urls.service';
-import { CreateUrlDto } from './dto/create-url.dto';
-import { UpdateUrlDto } from './dto/update-url.dto';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
-@Controller('urls')
+import { AUTH } from '@app/config/index';
+import { EUserRole } from '@app/types/index';
+
+import { RequestAuthDto } from '../auth/dto/request-auth.dto';
+import { JwtAuthGuard, RolesGuard } from '../auth/guards';
+import { Roles } from '../auth/decorators';
+
+import { CreateUrlDto, UpdateUrlDto, ParamsIdUrlDto } from './dto';
+import { UrlsService } from './urls.service';
+import { UrlEntity } from './entities/url.entity';
+
+@Controller({
+  path: 'urls',
+  version: '1',
+})
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles({
+  roles: [EUserRole.ADMIN, EUserRole.CLIENT],
+})
 @ApiTags('Urls')
+@ApiBearerAuth(AUTH.guards.jwt)
+@ApiResponse({
+  status: 401,
+  description: 'Unauthorized',
+})
+@ApiResponse({
+  status: 403,
+  description: 'Forbidden resource',
+})
 export class UrlsController {
   constructor(private readonly urlsService: UrlsService) {}
 
   @Post()
-  create(@Body() createUrlDto: CreateUrlDto) {
-    return this.urlsService.create(createUrlDto);
+  @ApiCreatedResponse({ type: UrlEntity })
+  public async create(
+    @Body() bodyData: CreateUrlDto,
+    @Request() { user: { id: userId } }: RequestAuthDto,
+  ): Promise<UrlEntity> {
+    return await this.urlsService.create(userId, bodyData);
   }
 
   @Get()
-  findAll() {
-    return this.urlsService.findAll();
+  @ApiOkResponse({ type: [UrlEntity] })
+  public async findAll(): Promise<UrlEntity[]> {
+    return await this.urlsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.urlsService.findOne(+id);
+  @Get('urls/:id')
+  @ApiOkResponse({ type: UrlEntity })
+  @ApiNotFoundResponse({ description: 'Not found' })
+  public async findOne(@Param() paramData: ParamsIdUrlDto): Promise<UrlEntity> {
+    return this.urlsService.findOne(paramData.id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUrlDto: UpdateUrlDto) {
-    return this.urlsService.update(+id, updateUrlDto);
+  @Patch('urls/:id')
+  @ApiOkResponse({ type: UrlEntity })
+  @ApiNotFoundResponse({ description: 'Not found' })
+  update(
+    @Body() bodyData: UpdateUrlDto,
+    @Param() paramData: ParamsIdUrlDto,
+    @Request() { user: { id: userId } }: RequestAuthDto,
+  ): Promise<UrlEntity> {
+    return this.urlsService.update(paramData.id, userId, bodyData);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.urlsService.remove(+id);
+  @Delete('urls/:id')
+  @ApiOkResponse({ type: UrlEntity })
+  @ApiNotFoundResponse({ description: 'Not found' })
+  remove(@Param() paramData: ParamsIdUrlDto): Promise<UrlEntity> {
+    return this.urlsService.remove(paramData.id);
   }
 }

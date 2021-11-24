@@ -50,10 +50,8 @@ export class UsersController {
 
   @Post()
   @ApiCreatedResponse({ type: UserEntity })
-  public async create(
-    @Body() createUserDto: CreateUserDto,
-  ): Promise<UserEntity> {
-    return await this.usersService.create(createUserDto);
+  public async create(@Body() bodyData: CreateUserDto): Promise<UserEntity> {
+    return await this.usersService.create(bodyData);
   }
 
   @Get()
@@ -75,10 +73,10 @@ export class UsersController {
   @ApiOkResponse({ type: UserEntity })
   @ApiNotFoundResponse({ description: 'Not found' })
   update(
+    @Body() bodyData: UpdateUserDto,
     @Param() paramData: ParamsIdUserDto,
-    @Body() updateUserDto: UpdateUserDto,
   ): Promise<UserEntity> {
-    return this.usersService.update(paramData.id, updateUserDto);
+    return this.usersService.update(paramData.id, bodyData);
   }
 
   @Delete(':id')
