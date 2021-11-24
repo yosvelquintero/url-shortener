@@ -14,9 +14,14 @@ export class AppService {
   ) {}
 
   public async findOneByCode(code: string): Promise<UrlDocument> {
-    const url = await this.urlModel.findOne({
-      code,
-    });
+    const url = await this.urlModel.findOneAndUpdate(
+      {
+        code,
+      },
+      {
+        $inc: { hits: 1 },
+      },
+    );
 
     if (!url) {
       throw new NotFoundException();
