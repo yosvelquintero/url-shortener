@@ -27,13 +27,14 @@ export class UrlsService {
     }).save();
   }
 
-  public async findAll(): Promise<UrlDocument[]> {
-    return await this.urlModel.find({ deleted: { $eq: null } });
+  public async findAll(userId: string): Promise<UrlDocument[]> {
+    return await this.urlModel.find({ userId, deleted: { $eq: null } });
   }
 
-  public async findOne(id: string): Promise<UrlDocument> {
+  public async findOne(userId: string, id: string): Promise<UrlDocument> {
     const url = await this.urlModel.findOne({
       _id: id,
+      userId,
       deleted: { $eq: null },
     });
 
@@ -44,8 +45,12 @@ export class UrlsService {
     return url;
   }
 
-  public async findOneByCode(code: string): Promise<UrlDocument> {
+  public async findOneByCode(
+    userId: string,
+    code: string,
+  ): Promise<UrlDocument> {
     const url = await this.urlModel.findOne({
+      userId,
       code,
       deleted: { $eq: null },
     });
@@ -58,13 +63,14 @@ export class UrlsService {
   }
 
   public async update(
-    id: string,
     userId: string,
+    id: string,
     updateUrlDto: UpdateUrlDto,
   ): Promise<UrlDocument> {
     const url = await this.urlModel.findOneAndUpdate(
       {
         _id: id,
+        userId,
         deleted: { $eq: null },
       },
       {
@@ -87,10 +93,11 @@ export class UrlsService {
     return url;
   }
 
-  public async remove(id: string): Promise<UrlDocument> {
+  public async remove(userId: string, id: string): Promise<UrlDocument> {
     const url = await this.urlModel.findOneAndUpdate(
       {
         _id: id,
+        userId,
         deleted: { $eq: null },
       },
       { $set: { deleted: new Date() } },
