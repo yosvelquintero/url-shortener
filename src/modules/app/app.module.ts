@@ -7,7 +7,7 @@ import { ENV } from '@app/config/index';
 import { UsersModule } from '@app/modules/users/users.module';
 import { UrlsModule } from '@app/modules/urls/urls.module';
 import { AuthModule } from '@app/modules/auth/auth.module';
-import { AppController } from './app.contoller';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
