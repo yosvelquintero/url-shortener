@@ -20,6 +20,11 @@ export class CreateUserDto implements Partial<IUser> {
 
   @IsNotEmpty()
   @IsIn([...Object.values(EUserRole)])
-  @ApiProperty()
-  readonly role: string;
+  @ApiProperty({
+    type: String,
+    description: `Should be one of the following values: ${Object.values(
+      EUserRole,
+    ).join(', ')}`,
+  })
+  readonly role: EUserRole;
 }
