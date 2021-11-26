@@ -2,29 +2,37 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsEmail, IsString, IsIn } from 'class-validator';
 
 import { EUserRole, IUser } from '@app/types/index';
+import { arrayToList } from '@app/utils/index';
 
 export class CreateUserDto implements Partial<IUser> {
-  @IsNotEmpty()
   @IsString()
-  @ApiProperty()
+  @IsNotEmpty()
+  @ApiProperty({
+    required: true,
+  })
   readonly name: string;
 
-  @IsNotEmpty()
   @IsEmail()
-  @ApiProperty()
+  @IsNotEmpty()
+  @ApiProperty({
+    required: true,
+  })
   readonly email: string;
 
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({
+    required: true,
+  })
   readonly password: string;
 
-  @IsNotEmpty()
   @IsIn([...Object.values(EUserRole)])
+  @IsNotEmpty()
   @ApiProperty({
     type: String,
-    description: `Should be one of the following values: ${Object.values(
-      EUserRole,
-    ).join(', ')}`,
+    description: `Should be one of the following values: ${arrayToList(
+      Object.values(EUserRole),
+    )}`,
+    required: true,
   })
   readonly role: EUserRole;
 }

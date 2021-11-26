@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ENTITY } from '@app/config/index';
+import { handlingNotFoundException } from '@app/utils/index';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -29,11 +30,7 @@ export class UsersService {
       deleted: { $eq: null },
     });
 
-    if (!user) {
-      throw new NotFoundException();
-    }
-
-    return user;
+    return handlingNotFoundException<UserDocument>(user);
   }
 
   public async update(
@@ -53,14 +50,11 @@ export class UsersService {
       },
       {
         new: true,
+        runValidators: true,
       },
     );
 
-    if (!user) {
-      throw new NotFoundException();
-    }
-
-    return user;
+    return handlingNotFoundException<UserDocument>(user);
   }
 
   public async remove(id: string): Promise<UserDocument> {
@@ -73,14 +67,9 @@ export class UsersService {
       {
         new: true,
         runValidators: true,
-        context: 'query',
       },
     );
 
-    if (!user) {
-      throw new NotFoundException();
-    }
-
-    return user;
+    return handlingNotFoundException<UserDocument>(user);
   }
 }

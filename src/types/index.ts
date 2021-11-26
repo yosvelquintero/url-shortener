@@ -9,6 +9,7 @@ export * from './interfaces/env';
 export * from './interfaces/metadata';
 export * from './interfaces/url-parameters';
 export * from './interfaces/mongoose-schema-options';
+export * from './interfaces/queries';
 export * from './interfaces/roles';
 export * from './interfaces/url';
 export * from './interfaces/user';
