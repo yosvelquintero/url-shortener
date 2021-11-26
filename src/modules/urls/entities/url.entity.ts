@@ -19,7 +19,9 @@ export class UrlEntity implements IUrl {
   @ApiProperty()
   id: string;
 
-  @Prop()
+  @Prop({
+    index: true,
+  })
   @ApiProperty()
   userId: string;
 

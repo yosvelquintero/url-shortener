@@ -1,12 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { nanoid } from 'nanoid';
 
 import { ENTITY } from '@app/config/index';
+import { handlingNotFoundException } from '@app/utils/index';
 
-import { CreateUrlDto } from './dto/create-url.dto';
-import { UpdateUrlDto } from './dto/update-url.dto';
+import { CreateUrlDto, FindAllQueryUrlDto, UpdateUrlDto } from './dto';
 import { UrlDocument } from './entities/url.entity';
 
 @Injectable()
@@ -27,8 +27,16 @@ export class UrlsService {
     }).save();
   }
 
-  public async findAll(userId: string): Promise<UrlDocument[]> {
-    return await this.urlModel.find({ userId, deleted: { $eq: null } });
+  public async findAll(
+    userId: string,
+    queryData: FindAllQueryUrlDto,
+  ): Promise<UrlDocument[]> {
+    const { code, keyword } = queryData;
+    return await this.urlModel.find({
+      userId,
+      ...this.getFindAllQuery(code, keyword),
+      deleted: { $eq: null },
+    });
   }
 
   public async findOne(userId: string, id: string): Promise<UrlDocument> {
@@ -38,11 +46,7 @@ export class UrlsService {
       deleted: { $eq: null },
     });
 
-    if (!url) {
-      throw new NotFoundException();
-    }
-
-    return url;
+    return handlingNotFoundException<UrlDocument>(url);
   }
 
   public async update(
@@ -69,11 +73,7 @@ export class UrlsService {
       },
     );
 
-    if (!url) {
-      throw new NotFoundException();
-    }
-
-    return url;
+    return handlingNotFoundException<UrlDocument>(url);
   }
 
   public async remove(userId: string, id: string): Promise<UrlDocument> {
@@ -90,10 +90,25 @@ export class UrlsService {
       },
     );
 
-    if (!url) {
-      throw new NotFoundException();
-    }
+    return handlingNotFoundException<UrlDocument>(url);
+  }
 
-    return url;
+  private getFindAllQuery(code = '', keyword = ''): FilterQuery<UrlDocument> {
+    return {
+      $and: [
+        {
+          code: {
+            $regex: code,
+            $options: 'i',
+          },
+        },
+        {
+          url: {
+            $regex: keyword,
+            $options: 'i',
+          },
+        },
+      ],
+    };
   }
 }

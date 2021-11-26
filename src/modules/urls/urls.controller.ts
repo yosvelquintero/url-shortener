@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -25,7 +26,12 @@ import { RequestAuthDto } from '../auth/dto/request-auth.dto';
 import { JwtAuthGuard, RolesGuard } from '../auth/guards';
 import { Roles } from '../auth/decorators';
 
-import { CreateUrlDto, UpdateUrlDto, ParamsIdUrlDto } from './dto';
+import {
+  CreateUrlDto,
+  UpdateUrlDto,
+  ParamsIdUrlDto,
+  FindAllQueryUrlDto,
+} from './dto';
 import { UrlsService } from './urls.service';
 import { UrlEntity } from './entities/url.entity';
 
@@ -62,9 +68,10 @@ export class UrlsController {
   @Get()
   @ApiOkResponse({ type: [UrlEntity] })
   public async findAll(
+    @Query() queryData: FindAllQueryUrlDto,
     @Request() { user: { id: userId } }: RequestAuthDto,
   ): Promise<UrlEntity[]> {
-    return await this.urlsService.findAll(userId);
+    return await this.urlsService.findAll(userId, queryData);
   }
 
   @Get(':id')
