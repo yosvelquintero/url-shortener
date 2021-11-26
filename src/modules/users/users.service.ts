@@ -53,6 +53,7 @@ export class UsersService {
       },
       {
         new: true,
+        runValidators: true,
       },
     );
 
@@ -73,7 +74,6 @@ export class UsersService {
       {
         new: true,
         runValidators: true,
-        context: 'query',
       },
     );
 

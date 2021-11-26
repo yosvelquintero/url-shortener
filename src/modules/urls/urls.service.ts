@@ -60,12 +60,12 @@ export class UrlsService {
         $set: {
           ...updateUrlDto,
           userId,
-          code: nanoid(10),
           updated: new Date(),
         },
       },
       {
         new: true,
+        runValidators: true,
       },
     );
 
@@ -87,7 +87,6 @@ export class UrlsService {
       {
         new: true,
         runValidators: true,
-        context: 'query',
       },
     );
 
