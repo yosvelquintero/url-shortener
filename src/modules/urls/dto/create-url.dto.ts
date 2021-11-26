@@ -12,7 +12,7 @@ import { IUrl } from '@app/types/index';
 import { arrayToList } from '@app/utils/index';
 
 const words = ['apple', 'google'];
-const blackListRegex = new RegExp(`^((?!(${words.join('|')})).)*$`);
+const blackListRegex = new RegExp(`^((?!(${words.join('|')})).)*$`, 'i');
 
 export class CreateUrlDto implements Partial<IUrl> {
   @IsUrl()
