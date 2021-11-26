@@ -19,24 +19,16 @@ export class UrlEntity implements IUrl {
   @ApiProperty()
   id: string;
 
-  @Prop({
-    index: true,
-  })
+  @Prop()
   @ApiProperty()
   userId: string;
 
   @Prop()
-  @ApiProperty({
-    uniqueItems: true,
-  })
+  @ApiProperty()
   url: string;
 
-  @Prop({
-    index: true,
-  })
-  @ApiProperty({
-    uniqueItems: true,
-  })
+  @Prop()
+  @ApiProperty()
   code: string;
 
   @Prop({
@@ -72,9 +64,9 @@ export class UrlEntity implements IUrl {
   deleted: Date | null;
 }
 
-export const UrlSchema = SchemaFactory.createForClass(UrlEntity).index(
-  { userId: 1, code: 1 },
-  { unique: true },
-);
+export const UrlSchema = SchemaFactory.createForClass(UrlEntity).index({
+  userId: 1,
+  code: 1,
+});
 
 UrlSchema.plugin(uniqueValidator);

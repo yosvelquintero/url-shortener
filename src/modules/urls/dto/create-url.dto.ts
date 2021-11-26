@@ -3,6 +3,7 @@ import {
   IsDate,
   IsNotEmpty,
   Matches,
+  MinDate,
   IsOptional,
   IsUrl,
 } from 'class-validator';
@@ -27,6 +28,7 @@ export class CreateUrlDto implements Partial<IUrl> {
   })
   readonly url: string;
 
+  @MinDate(new Date())
   @IsDate()
   @IsOptional()
   @ApiProperty({
