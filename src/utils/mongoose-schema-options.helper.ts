@@ -3,7 +3,7 @@ import { SchemaOptions } from '@nestjs/mongoose';
 import {
   IGetMongooseSchemaOptionsParams,
   IMongooseSchemaOptionsRet,
-} from '@app/types/index';
+} from '@app/types';
 
 export function getMongooseSchemaOptions<T>(
   params: IGetMongooseSchemaOptionsParams,

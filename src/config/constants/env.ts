@@ -1,6 +1,6 @@
 import { DeepReadonly } from 'ts-essentials';
 
-import { IEnv } from '@app/types/index';
+import { IEnv } from '@app/types';
 
 export const ENV: DeepReadonly<IEnv> = {
   app: {

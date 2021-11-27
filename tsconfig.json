@@ -18,12 +18,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/config/*": ["./src/config/*"],
-      "@app/decorators/*": ["./src/decorators/*"],
-      "@app/filters/*": ["./src/filters/*"],
-      "@app/modules/*": ["./src/modules/*"],
-      "@app/types/*": ["./src/types/*"],
-      "@app/utils/*": ["./src/utils/*"]
+      "@app/*": ["./src/*"]
     }
   }
 }

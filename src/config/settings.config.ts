@@ -7,7 +7,7 @@ import {
 import { json, urlencoded } from 'express';
 import * as helmet from 'helmet';
 
-import { ValidationErrorFilter } from '@app/filters/index';
+import { ValidationErrorFilter } from '@app/filters';
 
 export const settingsConfig = (prefix: string, app: INestApplication): void => {
   app.use(helmet());

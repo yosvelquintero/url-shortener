@@ -4,7 +4,6 @@ export * from './enums/user-role';
 // Interfaces
 export * from './interfaces/auth';
 export * from './interfaces/database';
-export * from './interfaces/entity';
 export * from './interfaces/env';
 export * from './interfaces/metadata';
 export * from './interfaces/url-parameters';
