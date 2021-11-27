@@ -36,6 +36,7 @@ export class UsersService {
       {
         $set: {
           ...updateUserDto,
+          updated: new Date(),
         },
       },
     );
@@ -47,7 +48,11 @@ export class UsersService {
         _id: id,
         deleted: { $eq: null },
       },
-      { $set: { deleted: new Date() } },
+      {
+        $set: {
+          deleted: new Date(),
+        },
+      },
     );
   }
 }

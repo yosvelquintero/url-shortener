@@ -14,6 +14,7 @@ export class AppService {
       },
       {
         $inc: { hits: 1 },
+        $set: { updated: new Date() },
       },
     );
 

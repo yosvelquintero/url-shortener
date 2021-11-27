@@ -55,7 +55,6 @@ export class UrlsService {
       {
         $set: {
           ...updateUrlDto,
-          userId,
           updated: new Date(),
         },
       },
@@ -69,7 +68,11 @@ export class UrlsService {
         userId,
         deleted: { $eq: null },
       },
-      { $set: { deleted: new Date() } },
+      {
+        $set: {
+          deleted: new Date(),
+        },
+      },
     );
   }
 
