@@ -4,8 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 
-import { ENTITY, ENV } from '@app/config/index';
-import { UserSchema } from '@app/modules/users/entities/user.entity';
+import { ENV } from '@app/config';
+
+import { UserEntity, UserSchema } from '../users/entities/user.entity';
+import { UsersModule } from '../users/users.module';
 
 import { JwtStrategy } from './strategies';
 import { AuthService } from './auth.service';
@@ -24,9 +26,8 @@ import { JwtAuthGuard, RolesGuard } from './guards';
         },
       }),
     }),
-    MongooseModule.forFeature([
-      { name: ENTITY.names.userEntity, schema: UserSchema },
-    ]),
+    MongooseModule.forFeature([{ name: UserEntity.name, schema: UserSchema }]),
+    UsersModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, JwtAuthGuard, RolesGuard],
