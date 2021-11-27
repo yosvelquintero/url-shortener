@@ -2,9 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
 
-import { ENV, settingsConfig, swaggerConfig } from '@app/config/index';
-import { AppModule } from '@app/modules/app/app.module';
-import { TEnvAppApi } from '@app/types/index';
+import { ENV, settingsConfig, swaggerConfig } from '@app/config';
+import { AppModule } from '@app/modules/app.module';
+import { TEnvAppApi } from '@app/types';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
