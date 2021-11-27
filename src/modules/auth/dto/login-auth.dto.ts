@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsEmail, IsString } from 'class-validator';
 
-import { IAuthUser } from '@app/types/index';
+import { IAuthUser } from '@app/types';
 
 export class LoginAuthDto implements Omit<IAuthUser, 'id' | 'role'> {
   @IsNotEmpty()
