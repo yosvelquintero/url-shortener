@@ -30,12 +30,12 @@ export abstract class EntityRepository<T extends Document> {
   }
 
   public async find(entityFilterQuery: FilterQuery<T>): Promise<T[] | null> {
-    return this.entityModel.find(entityFilterQuery);
+    return await this.entityModel.find(entityFilterQuery);
   }
 
   public async create(createEntityData: AnyKeys<T> & AnyObject): Promise<T> {
     const entity = new this.entityModel(createEntityData);
-    return entity.save();
+    return await entity.save();
   }
 
   public async findOneAndUpdate(
@@ -46,11 +46,11 @@ export abstract class EntityRepository<T extends Document> {
       entityFilterQuery,
       {
         ...updateEntityData,
-        updated: new Date(),
       },
       {
         new: true,
         runValidators: true,
+        context: 'query',
       },
     );
 
