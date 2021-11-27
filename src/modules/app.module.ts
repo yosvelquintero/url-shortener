@@ -2,13 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { ENTITY, ENV } from '@app/config/index';
-import { UsersModule } from '@app/modules/users/users.module';
-import { UrlsModule } from '@app/modules/urls/urls.module';
-import { AuthModule } from '@app/modules/auth/auth.module';
+import { ENV } from '@app/config';
 
-import { UrlSchema } from '../urls/entities/url.entity';
-
+import { AuthModule } from './auth/auth.module';
+import { UrlsModule } from './urls/urls.module';
+import { UrlEntity, UrlSchema } from './urls/entities/url.entity';
+import { UsersModule } from './users/users.module';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 
@@ -23,9 +22,7 @@ import { AppController } from './app.controller';
         useUnifiedTopology: true,
       }),
     }),
-    MongooseModule.forFeature([
-      { name: ENTITY.names.urlEntity, schema: UrlSchema },
-    ]),
+    MongooseModule.forFeature([{ name: UrlEntity.name, schema: UrlSchema }]),
     AuthModule,
     UsersModule,
     UrlsModule,

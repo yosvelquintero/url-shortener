@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Redirect } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { ParamsCodeUrlDto } from '../urls/dto';
-import { UrlEntity } from '../urls/entities/url.entity';
+import { ParamsCodeUrlDto } from './urls/dto';
+import { UrlEntity } from './urls/entities/url.entity';
 
 import { AppService } from './app.service';
 
