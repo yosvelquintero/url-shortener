@@ -11,7 +11,7 @@ import {
 export abstract class EntityRepository<T extends Document> {
   constructor(protected readonly entityModel: Model<T>) {}
 
-  public async findOneByEmail(
+  public async authenticateByEmail(
     entityFilterQuery: FilterQuery<T>,
     projection?: Record<string, AnyKeys<T>>,
   ): Promise<T | null> {
