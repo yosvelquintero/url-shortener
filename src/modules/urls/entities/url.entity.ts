@@ -3,9 +3,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Document } from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
 
-import { DATABASE } from '@app/config/index';
-import { IUrl } from '@app/types/index';
-import { getMongooseSchemaOptions } from '@app/utils/index';
+import { DATABASE } from '@app/config';
+import { IUrl } from '@app/types';
+import { getMongooseSchemaOptions } from '@app/utils';
 
 export type UrlDocument = UrlEntity & Document;
 

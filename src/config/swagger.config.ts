@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import { TEnvAppApi } from '@app/types/index';
+import { TEnvAppApi } from '@app/types';
 
 import { AUTH } from './constants/auth';
 

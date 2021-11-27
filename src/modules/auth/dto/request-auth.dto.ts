@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IAuthUser } from '@app/types/index';
+import { IAuthUser } from '@app/types';
 
 export class RequestAuthDto {
   @ApiProperty()

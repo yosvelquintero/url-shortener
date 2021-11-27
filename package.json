@@ -57,6 +57,7 @@
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^4.3.8",
     "jest": "^27.2.5",
     "prettier": "^2.3.2",
     "source-map-support": "^0.5.20",
@@ -84,5 +85,16 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "{src,!(node_modules)}/**/*.{ts,scss,json,md,html}": [
+      "echo \"[Husky] pre-commit\"",
+      "npm run format"
+    ]
   }
 }

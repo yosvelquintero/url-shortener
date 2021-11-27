@@ -8,8 +8,8 @@ import {
   IsUrl,
 } from 'class-validator';
 
-import { IUrl } from '@app/types/index';
-import { arrayToList } from '@app/utils/index';
+import { IUrl } from '@app/types';
+import { arrayToList } from '@app/utils';
 
 const words = ['apple', 'google'];
 const blackListRegex = new RegExp(`^((?!(${words.join('|')})).)*$`, 'i');
