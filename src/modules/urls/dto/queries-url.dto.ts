@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 
-import { IQueryUrl } from '@app/types/index';
+import { IQueryUrl } from '@app/types';
 
 export class FindAllQueryUrlDto implements IQueryUrl {
   @IsOptional()

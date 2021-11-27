@@ -1,43 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-
-import { ENTITY } from '@app/config/index';
-import { handlingNotFoundException } from '@app/utils/index';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDocument } from './entities/user.entity';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel(ENTITY.names.userEntity)
-    private readonly userModel: Model<UserDocument>,
-  ) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
 
   public async create(createUserDto: CreateUserDto): Promise<UserDocument> {
-    return new this.userModel(createUserDto).save();
+    return await this.usersRepository.create(createUserDto);
   }
 
   public async findAll(): Promise<UserDocument[]> {
-    return await this.userModel.find({ deleted: { $eq: null } });
+    return await this.usersRepository.find({ deleted: { $eq: null } });
   }
 
   public async findOne(id: string): Promise<UserDocument> {
-    const user = await this.userModel.findOne({
+    return await this.usersRepository.findOne({
       _id: id,
       deleted: { $eq: null },
     });
-
-    return handlingNotFoundException<UserDocument>(user);
   }
 
   public async update(
     id: string,
     updateUserDto: UpdateUserDto,
   ): Promise<UserDocument> {
-    const user = await this.userModel.findOneAndUpdate(
+    return await this.usersRepository.findOneAndUpdate(
       {
         _id: id,
         deleted: { $eq: null },
@@ -45,31 +36,18 @@ export class UsersService {
       {
         $set: {
           ...updateUserDto,
-          updated: new Date(),
         },
       },
-      {
-        new: true,
-        runValidators: true,
-      },
     );
-
-    return handlingNotFoundException<UserDocument>(user);
   }
 
   public async remove(id: string): Promise<UserDocument> {
-    const user = await this.userModel.findOneAndUpdate(
+    return await this.usersRepository.findOneAndUpdate(
       {
         _id: id,
         deleted: { $eq: null },
       },
       { $set: { deleted: new Date() } },
-      {
-        new: true,
-        runValidators: true,
-      },
     );
-
-    return handlingNotFoundException<UserDocument>(user);
   }
 }

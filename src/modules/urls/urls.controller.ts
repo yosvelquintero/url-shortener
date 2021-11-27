@@ -19,8 +19,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { AUTH } from '@app/config/index';
-import { EUserRole } from '@app/types/index';
+import { AUTH } from '@app/config';
+import { EUserRole } from '@app/types';
 
 import { RequestAuthDto } from '../auth/dto/request-auth.dto';
 import { JwtAuthGuard, RolesGuard } from '../auth/guards';

@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsEmail, IsString, IsIn } from 'class-validator';
 
-import { EUserRole, IUser } from '@app/types/index';
-import { arrayToList } from '@app/utils/index';
+import { EUserRole, IUser } from '@app/types';
+import { arrayToList } from '@app/utils';
 
 export class CreateUserDto implements Partial<IUser> {
   @IsString()

@@ -17,15 +17,15 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { AUTH } from '@app/config/index';
+import { AUTH } from '@app/config';
 import { Roles } from '@app/modules/auth/decorators';
-import { EUserRole } from '@app/types/index';
+import { EUserRole } from '@app/types';
 
 import { JwtAuthGuard, RolesGuard } from '../auth/guards';
 
+import { UserEntity } from './entities/user.entity';
 import { UsersService } from './users.service';
 import { CreateUserDto, UpdateUserDto, ParamsIdUserDto } from './dto';
-import { UserEntity } from './entities/user.entity';
 
 @Controller({
   path: 'users',
