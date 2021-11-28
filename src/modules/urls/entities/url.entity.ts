@@ -33,8 +33,11 @@ export class UrlEntity implements IUrl {
 
   @Prop({
     index: true,
+    unique: true,
   })
-  @ApiProperty()
+  @ApiProperty({
+    uniqueItems: true,
+  })
   code: string;
 
   @Prop({
