@@ -5,6 +5,7 @@ import {
   Document,
   FilterQuery,
   Model,
+  QueryOptions,
   UpdateQuery,
 } from 'mongoose';
 
@@ -12,25 +13,28 @@ export abstract class EntityRepository<T extends Document> {
   constructor(protected readonly entityModel: Model<T>) {}
 
   public async authenticateByEmail(
-    entityFilterQuery: FilterQuery<T>,
+    filter: FilterQuery<T>,
     projection?: Record<string, AnyKeys<T>>,
+    options?: QueryOptions,
   ): Promise<T | null> {
-    return await this.entityModel.findOne(entityFilterQuery, projection);
+    return await this.entityModel.findOne(filter, projection, options);
   }
 
   public async findOne(
-    entityFilterQuery: FilterQuery<T>,
+    filter: FilterQuery<T>,
     projection?: Record<string, AnyKeys<T>>,
+    options?: QueryOptions,
   ): Promise<T | null> {
-    const entity = await this.entityModel.findOne(
-      entityFilterQuery,
-      projection,
-    );
+    const entity = await this.entityModel.findOne(filter, projection, options);
     return this.handlingNotFoundException(entity);
   }
 
-  public async find(entityFilterQuery: FilterQuery<T>): Promise<T[] | null> {
-    return await this.entityModel.find(entityFilterQuery);
+  public async find(
+    filter: FilterQuery<T>,
+    projection?: Record<string, AnyKeys<T>>,
+    options?: QueryOptions,
+  ): Promise<T[] | null> {
+    return await this.entityModel.find(filter, projection, options);
   }
 
   public async create(createEntityData: AnyKeys<T> & AnyObject): Promise<T> {
@@ -39,21 +43,25 @@ export abstract class EntityRepository<T extends Document> {
   }
 
   public async findOneAndUpdate(
-    entityFilterQuery: FilterQuery<T>,
-    updateEntityData: UpdateQuery<AnyKeys<T>>,
+    filter: FilterQuery<T>,
+    update: UpdateQuery<AnyKeys<T>>,
+    options?: QueryOptions,
   ): Promise<T | null> {
-    const entity = await this.entityModel.findOneAndUpdate(
-      entityFilterQuery,
-      {
-        ...updateEntityData,
-      },
-      {
-        new: true,
-        runValidators: true,
-        context: 'query',
-      },
-    );
+    const entity = await this.entityModel.findOneAndUpdate(filter, update, {
+      new: true,
+      runValidators: true,
+      context: 'query',
+      ...options,
+    });
 
+    return this.handlingNotFoundException(entity);
+  }
+
+  public async findOneAndDelete(
+    filter: FilterQuery<T>,
+    options?: QueryOptions,
+  ): Promise<T | null> {
+    const entity = await this.entityModel.findOneAndDelete(filter, options);
     return this.handlingNotFoundException(entity);
   }
 
