@@ -6,6 +6,7 @@ export const DATABASE: DeepReadonly<IDatabase> = {
   mongodb: {
     collections: {
       urls: 'urls',
+      urlHits: 'urlHits',
       users: 'users',
     },
   },
