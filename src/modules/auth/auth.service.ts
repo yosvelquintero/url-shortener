@@ -1,11 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 import {
   IAuthJWTPayload,
   IAuthToken,
-  IAuthUserCredentials,
-  IAuthUserPartial,
+  TAuthUserCredentials,
+  TAuthUserPartial,
 } from '@app/types';
 
 import { UserDocument } from '../users/entities/user.entity';
@@ -21,8 +22,8 @@ export class AuthService {
   public async login({
     email,
     password,
-  }: IAuthUserCredentials): Promise<IAuthToken> {
-    const user: IAuthUserPartial = await this.validateUser(email, password);
+  }: TAuthUserCredentials): Promise<IAuthToken> {
+    const user: TAuthUserPartial = await this.validateUser(email, password);
     const payload: IAuthJWTPayload = {
       sub: user.id,
       email,
@@ -39,17 +40,17 @@ export class AuthService {
   public async validateUser(
     email: string,
     password: string,
-  ): Promise<IAuthUserPartial> {
+  ): Promise<TAuthUserPartial> {
     const user: UserDocument = await this.usersRepository.authenticateByEmail({
       email,
     });
-    if (!user || user.password !== password) {
-      throw new UnauthorizedException('user email and/or password incorrect!');
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      throw new UnauthorizedException('User email and/or password incorrect!');
     }
     return this.sanitized(user);
   }
 
-  private sanitized({ _id, email, role }: UserDocument): IAuthUserPartial {
+  private sanitized({ _id, email, role }: UserDocument): TAuthUserPartial {
     return { id: _id, email, role };
   }
 }

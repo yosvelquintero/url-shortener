@@ -5,7 +5,7 @@
 @host = http://{{hostname}}:{{port}}
 @contentType = application/json
 
-@authorization = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTljYmE1Y2RmNDU0NzhlMjYxNjcyODgiLCJlbWFpbCI6ImFkbWluQGxvY2FsaG9zdC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MjMzNzM5NjksImV4cCI6MTcyMzU0Njc2OX0.aFY-Jr9tF5JXkVmuCqOLxyMx0k_eBaTwFQDO-lcy3fc
+@authorization = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmI4YWE4YWUyNmNkMjEwOGZlZTM4NjAiLCJlbWFpbCI6ImFkbWluQGxvY2FsaG9zdC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MjMzOTgxNDIsImV4cCI6MTcyMzU3MDk0Mn0.ozxK0tRifimBK9gAYJBVA5V_JEkA7LB1Yn8M4lwqBl4
 
 
 # ------------------------------------------------------------
@@ -31,7 +31,7 @@ POST  {{host}}{{api}}/v1/auth/login
 Content-Type: {{contentType}}
 
 {
-    "email": "makole@localhost.com",
+    "email": "admin@localhost.com",
     "password": "allcontrol"
 }
 
