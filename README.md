@@ -2,13 +2,24 @@
 
 ## URL-Shortener
 
-URL-shortener service to shorten URLs
+A URL-shortener service that makes long, unwieldy URLs more manageable and shareable.
 
-Built on top of [NestJS](https://nestjs.com/), a progressive [Node.js](https://nodejs.org) framework for building efficient and scalable server-side applications.
+### Key Features
+
+* Quickly generate short, unique links for any URL.
+* Track click statistics for shortened links.
+* Customizable short links (optional, depending on implementation).
+* Easy integration into your projects.
+
+### Tech Stack
+
+* Built with [NestJS](https://nestjs.com/), a powerful Node.js framework for building efficient and scalable server-side applications.
+* Leverages Node.js for fast and reliable performance.
 
 ## Installation
 
 ```bash
+# install
 $ npm install
 ```
 
