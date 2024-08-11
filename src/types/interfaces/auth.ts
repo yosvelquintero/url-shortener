@@ -5,6 +5,7 @@ export interface IAuthGuards {
     local: string;
     jwt: string;
   };
+  saltRounds: number;
 }
 
 export interface IAuthUser {

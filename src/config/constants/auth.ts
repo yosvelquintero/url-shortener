@@ -7,4 +7,5 @@ export const AUTH: DeepReadonly<IAuthGuards> = {
     local: 'local',
     jwt: 'jwt',
   },
+  saltRounds: 10,
 };

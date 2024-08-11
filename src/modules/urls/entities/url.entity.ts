@@ -1,11 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Document } from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
 
 import { DATABASE } from '@app/config';
 import { IUrl } from '@app/types';
 import { getMongooseSchemaOptions } from '@app/utils';
+
+import { UrlHitEntity } from './url-hit.entity';
 
 export type UrlDocument = UrlEntity & Document;
 
@@ -29,6 +31,12 @@ export class UrlEntity implements IUrl {
     index: true,
   })
   @ApiProperty()
+  urlHitId: string;
+
+  @Prop({
+    index: true,
+  })
+  @ApiProperty()
   url: string;
 
   @Prop({
@@ -40,13 +48,11 @@ export class UrlEntity implements IUrl {
   })
   code: string;
 
-  @Prop({
-    default: 0,
+  @ApiPropertyOptional({
+    type: () => UrlHitEntity,
+    description: 'Related `UrlHits` meta object',
   })
-  @ApiProperty({
-    default: 0,
-  })
-  hits: number;
+  hits?: UrlHitEntity;
 
   @Prop()
   @ApiProperty()
@@ -76,3 +82,10 @@ export class UrlEntity implements IUrl {
 export const UrlSchema = SchemaFactory.createForClass(UrlEntity);
 
 UrlSchema.plugin(uniqueValidator);
+
+UrlSchema.virtual('hits', {
+  ref: UrlHitEntity.name,
+  localField: 'urlHitId',
+  foreignField: '_id',
+  justOne: true,
+});

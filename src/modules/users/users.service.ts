@@ -14,7 +14,9 @@ export class UsersService {
   }
 
   public async findAll(): Promise<UserDocument[]> {
-    return await this.usersRepository.find({ deleted: { $eq: null } });
+    return await this.usersRepository.find({
+      deleted: { $eq: null },
+    });
   }
 
   public async findOne(id: string): Promise<UserDocument> {

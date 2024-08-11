@@ -16,7 +16,10 @@ export class AppController {
   @ApiNotFoundResponse({ description: 'Not found' })
   @Redirect('', 302)
   public async findOneByCode(@Param() paramData: ParamsCodeUrlDto) {
-    const { url } = await this.appService.findOneByCode(paramData.code);
+    const { url, urlHitId } = await this.appService.findOneByCode(
+      paramData.code,
+    );
+    this.appService.findOneUrlHitAndUpdate(urlHitId);
     return {
       url,
     };

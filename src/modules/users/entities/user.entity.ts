@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Document } from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
+import * as bcrypt from 'bcrypt';
 
 import { DATABASE } from '@app/config';
 import { EUserRole, IUser } from '@app/types';
@@ -63,5 +64,11 @@ export class UserEntity implements IUser {
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserEntity);
+
+UserSchema.pre<IUser>('save', async function (next) {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
 UserSchema.plugin(uniqueValidator);
