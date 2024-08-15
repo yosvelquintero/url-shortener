@@ -15,6 +15,7 @@ A URL-shortener service that makes long, unwieldy URLs more manageable and share
 
 * Built with [NestJS](https://nestjs.com/), a powerful Node.js framework for building efficient and scalable server-side applications.
 * Leverages Node.js for fast and reliable performance.
+* Utilizes MongoDB as the database for storing and managing URL data.
 
 ## Installation
 
