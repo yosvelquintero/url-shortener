@@ -95,7 +95,7 @@
     }
   },
   "lint-staged": {
-    "{src,!(node_modules)}/**/*.{ts,scss,json,md,html}": [
+    "{src,!(node_modules)}/**/*.{ts,scss,json,md}": [
       "echo \"[Husky] pre-commit\"",
       "npm run format",
       "npm run lint"
