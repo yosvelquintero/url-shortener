@@ -85,7 +85,6 @@ $ npm run format
 $ npm run lint
 ```
 
-
 ## Environment variables
 
 In order to run the project, first the environment variables should be configured by coping content of file `.env-template` to a new `.env` and edit it
@@ -102,5 +101,3 @@ Once enabled and running in the development environment, you can visit the Swagg
 The API documentation for the URL Shortener service is provided via Swagger. It offers an interactive interface to explore the available endpoints, test their functionality, and view detailed information about the request and response models.
 
 ![Swagger UI](./Swagger-UI.png)
-
-Visit the Swagger UI by running the application and navigating to [http://localhost:3000/api/swagger/](http://localhost:3000/api/swagger/) in your browser.
