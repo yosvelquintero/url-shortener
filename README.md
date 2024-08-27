@@ -83,6 +83,7 @@ $ npm run format
 
 # Lint code
 $ npm run lint
+```
 
 
 ## Environment variables
