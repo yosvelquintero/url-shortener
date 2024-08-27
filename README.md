@@ -58,13 +58,48 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Husky
+
+This project uses [Husky](https://typicode.github.io/husky) to manage Git hooks, ensuring that your code meets quality standards before committing.
+
+### Pre-Commit Hook
+
+The Husky pre-commit hook is configured to run the following tasks automatically before each commit:
+
+1. **Code Formatting**: Runs `Prettier` to format your code according to the project's style guidelines.
+2. **Linting**: Runs `ESLint` to catch and fix any potential issues in your TypeScript code.
+
+These tasks are defined in the `lint-staged` configuration, which targets files with specific extensions (e.g., `.ts`, `.scss`, `.json`, `.md`) within the `src` directory and non-`node_modules` directories.
+
+If any of these tasks fail, the commit will be aborted, and you'll need to fix the issues before trying to commit again. This ensures that only properly formatted and linted code is committed to the repository.
+
+### Manual Testing
+
+In addition to the automated checks, you can manually run the following scripts to ensure your code meets the standards:
+
+```bash
+# Format code
+$ npm run format
+
+# Lint code
+$ npm run lint
+
+
 ## Environment variables
 
 In order to run the project, first the environment variables should be configured by coping content of file `.env-template` to a new `.env` and edit it
 
 ## Swagger
 
-Swagger can be enabled in the `.env` file by setting `APP_API_IS_SWAGGER_ENABLED=true`
+Swagger can be enabled in the `.env` file by setting `APP_API_IS_SWAGGER_ENABLED=true`.
 
-After enabled and running development environment you can visit:
+Once enabled and running in the development environment, you can visit the Swagger UI at:
 [http://localhost:3000/api/swagger/](http://localhost:3000/api/swagger/)
+
+### Swagger Documentation
+
+The API documentation for the URL Shortener service is provided via Swagger. It offers an interactive interface to explore the available endpoints, test their functionality, and view detailed information about the request and response models.
+
+![Swagger UI](./Swagger-UI.png)
+
+Visit the Swagger UI by running the application and navigating to [http://localhost:3001/api/swagger/](http://localhost:3001/api/swagger/) in your browser.
