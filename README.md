@@ -103,4 +103,4 @@ The API documentation for the URL Shortener service is provided via Swagger. It 
 
 ![Swagger UI](./Swagger-UI.png)
 
-Visit the Swagger UI by running the application and navigating to [http://localhost:3001/api/swagger/](http://localhost:3001/api/swagger/) in your browser.
+Visit the Swagger UI by running the application and navigating to [http://localhost:3000/api/swagger/](http://localhost:3000/api/swagger/) in your browser.
