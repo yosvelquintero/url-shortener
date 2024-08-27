@@ -34,7 +34,9 @@ export abstract class EntityRepository<T extends Document> {
     projection?: Record<string, AnyKeys<T>>,
     options?: QueryOptions,
   ): Promise<T[] | null> {
-    return await this.entityModel.find(filter, projection, options);
+    return await this.entityModel
+      .find(filter, projection, options)
+      .sort({ created: -1 });
   }
 
   public async create(createEntityData: AnyKeys<T> & AnyObject): Promise<T> {
