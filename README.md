@@ -6,24 +6,24 @@ A URL-shortener service that makes long, unwieldy URLs more manageable and share
 
 ### Key Features
 
-* Quickly generate short, unique links for any URL.
-* User authentication and authorization for managing and tracking personal short links.
-* Allow users to set expiration dates for shortened URLs, after which they would be automatically deleted.
-* Customizable short links (optional, depending on implementation).
-* Track click statistics for shortened links.
-* Easy integration into your projects.
+- Quickly generate short, unique links for any URL.
+- User authentication and authorization for managing and tracking personal short links.
+- Allow users to set expiration dates for shortened URLs, after which they would be automatically deleted.
+- Customizable short links (optional, depending on implementation).
+- Track click statistics for shortened links.
+- Easy integration into your projects.
 
 ### Tech Stack
 
-* Built with [NestJS](https://nestjs.com/), a powerful Node.js framework for building efficient and scalable server-side applications.
-* Leverages [Node.js](https://nodejs.org/) for fast and reliable performance.
-* Uses [MongoDB](https://www.mongodb.com/) as the database for storing URL mappings and click data, providing flexibility and scalability.
+- Built with [NestJS](https://nestjs.com/), a powerful Node.js framework for building efficient and scalable server-side applications.
+- Leverages [Node.js](https://nodejs.org/) for fast and reliable performance.
+- Uses [MongoDB](https://www.mongodb.com/) as the database for storing URL mappings and click data, providing flexibility and scalability.
 
 ### Future Improvements
 
-* Add support for custom domain names for shortened URLs.
-* Explore caching mechanisms for frequently accessed short links to improve performance.
-* Protect the service from abuse by implementing rate limiting on API endpoints.
+- Add support for custom domain names for shortened URLs.
+- Explore caching mechanisms for frequently accessed short links to improve performance.
+- Protect the service from abuse by implementing rate limiting on API endpoints.
 
 ## Installation
 

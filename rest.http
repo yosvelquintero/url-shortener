@@ -1,8 +1,8 @@
 ### Amadeus
-@hostname = localhost
-@port = 3000
+@serverHostname = localhost
+@serverPort = 3000
 @api = /api
-@host = http://{{hostname}}:{{port}}
+@serverUrl = http://{{serverHostname}}:{{serverPort}}
 @contentType = application/json
 
 @authorization = Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmI4YWE4YWUyNmNkMjEwOGZlZTM4NjAiLCJlbWFpbCI6ImFkbWluQGxvY2FsaG9zdC5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MjQ3NjQxNzMsImV4cCI6MTcyNDkzNjk3M30.7ashf_fyuHOxoZSxv3S0waeGKL8aA9VrENgQnOsWVXs
@@ -16,7 +16,7 @@
 ### Get app url
 ###
 
-GET  {{host}}/pKY-pxUv3G
+GET {{serverUrl}}/pKY-pxUv3G
 Content-Type: {{contentType}}
 
 # ------------------------------------------------------------
@@ -27,7 +27,7 @@ Content-Type: {{contentType}}
 ### Post auth
 ###
 
-POST  {{host}}{{api}}/v1/auth/login
+POST {{serverUrl}}{{api}}/v1/auth/login
 Content-Type: {{contentType}}
 
 {
@@ -44,7 +44,7 @@ Content-Type: {{contentType}}
 ###
 
 
-GET {{host}}{{api}}/v1/urls
+GET {{serverUrl}}{{api}}/v1/urls
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
@@ -53,7 +53,7 @@ Authorization: {{authorization}}
 ###
 
 
-GET {{host}}{{api}}/v1/urls/61a60d186d4f2ddb7e71d37d
+GET {{serverUrl}}{{api}}/v1/urls/61a60d186d4f2ddb7e71d37d
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
@@ -61,7 +61,7 @@ Authorization: {{authorization}}
 ### Post url
 ###
 
-POST {{host}}{{api}}/v1/urls
+POST {{serverUrl}}{{api}}/v1/urls
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
@@ -73,7 +73,7 @@ Authorization: {{authorization}}
 ### Patch url by id
 ###
 
-PATCH {{host}}{{api}}/v1/urls/61a60d5a6d4f2ddb7e71d388
+PATCH {{serverUrl}}{{api}}/v1/urls/61a60d5a6d4f2ddb7e71d388
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
@@ -85,7 +85,7 @@ Authorization: {{authorization}}
 ###
 ### Delete url by id
 
-DELETE {{host}}{{api}}/v1/urls/61a2546c2fb60a8b29b8c1a5
+DELETE {{serverUrl}}{{api}}/v1/urls/61a2546c2fb60a8b29b8c1a5
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
@@ -101,7 +101,7 @@ Authorization: {{authorization}}
 ###
 
 
-GET {{host}}{{api}}/v1/users
+GET {{serverUrl}}{{api}}/v1/users
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
@@ -110,7 +110,7 @@ Authorization: {{authorization}}
 ###
 
 
-GET {{host}}{{api}}/v1/users/619cba5cdf45478e26167288
+GET {{serverUrl}}{{api}}/v1/users/619cba5cdf45478e26167288
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
@@ -119,7 +119,7 @@ Authorization: {{authorization}}
 ###
 
 
-POST {{host}}{{api}}/v1/users
+POST {{serverUrl}}{{api}}/v1/users
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
@@ -135,7 +135,7 @@ Authorization: {{authorization}}
 ###
 
 
-PATCH {{host}}{{api}}/v1/users/61a1e8d6e13429afee2fe022
+PATCH {{serverUrl}}{{api}}/v1/users/61a1e8d6e13429afee2fe022
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
@@ -149,7 +149,7 @@ Authorization: {{authorization}}
 ###
 
 
-DELETE {{host}}{{api}}/v1/users/66b8a4df3fc05570e035118a
+DELETE {{serverUrl}}{{api}}/v1/users/66b8a4df3fc05570e035118a
 Content-Type: {{contentType}}
 Authorization: {{authorization}}
 
