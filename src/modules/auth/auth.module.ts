@@ -16,7 +16,6 @@ import { JwtAuthGuard, RolesGuard } from './guards';
 
 @Module({
   imports: [
-    PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
@@ -27,6 +26,7 @@ import { JwtAuthGuard, RolesGuard } from './guards';
       }),
     }),
     MongooseModule.forFeature([{ name: UserEntity.name, schema: UserSchema }]),
+    PassportModule,
     UsersModule,
   ],
   controllers: [AuthController],
